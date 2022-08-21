@@ -1,7 +1,8 @@
-import express from "express";
-import bodyParser from "body-parser";
-import axios from "axios";
-import serverless from "serverless-http";
+"use strict";
+const express = require("express");
+const bodyParser = require("body-parser");
+const axios = require("axios");
+const serverless = require("serverless-http");
 
 const app = express();
 const router = express.Router();
@@ -9,7 +10,6 @@ const router = express.Router();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-const port = 5000;
 const sleep = (delay) => {
   return new Promise(function (resolve) {
     setTimeout(resolve, delay);
@@ -35,7 +35,7 @@ router.get("/entry/likers/", async (req, res) => {
   res.json(likers);
 });
 
-app.use("/.netlify/functions/api", router);
+app.use("/.netlify/functions/server", router); // path must route to lambda
 
 module.exports = app;
 module.exports.handler = serverless(app);
