@@ -8,6 +8,7 @@ const serverless = require("serverless-http");
 const app = express();
 const router = express.Router();
 
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
