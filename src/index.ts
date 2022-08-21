@@ -8,7 +8,23 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const port = 5000;
+const sleep = (delay: number) => {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, delay);
+  });
+};
 
+axios.interceptors.response.use(
+  async function (response) {
+    await sleep(350);
+    return response;
+  },
+  function (error) {
+    // Do something with response error
+    console.error(error);
+    return Promise.reject(error);
+  }
+);
 app.get("/entry/likers/", async (req, res) => {
   const entryId = req.query.id;
   const likers = await axios
